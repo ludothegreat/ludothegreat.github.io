@@ -114,12 +114,7 @@ function renderItems(section, feedName, items) {
 // 10) For each feed: placeholder + cache + background fetch
 async function handleFeed(feed) {
   const container = document.getElementById('news-feed');
-  if (!container) return; // Ensure container exists
-
   const sectionId = 'sec-' + feedKey(feed);
-
-  // Initial loading state for the feed section
-  displayFeedLoading(feed.name, sectionId, container);
 
   // build section if absent
   let section = document.getElementById(sectionId);
@@ -134,11 +129,12 @@ async function handleFeed(feed) {
     section.style.borderLeftColor = color;
 
     section.innerHTML = `<h2>${feed.name}</h2>`;
+    const status = document.createElement('p');
+    status.className = 'status';
+    status.textContent = 'Loading…';
+    section.appendChild(status);
     container.appendChild(section);
   }
-
-  // Remove any existing error class before attempting to load
-  section.classList.remove('feed-error');
   const status = section.querySelector('.status');
   const cacheKey = 'xmlCache_' + feedKey(feed);
   const raw = localStorage.getItem(cacheKey);
@@ -148,7 +144,7 @@ async function handleFeed(feed) {
     try {
       const { xml } = JSON.parse(raw);
       const data = await parseXml(xml);
-      hideFeedLoading(sectionId); // Hide loading after rendering from cache
+      status.remove();
       renderItems(section, feed.name, data.items);
     } catch (e) {
       console.warn('Cache parse error', e);
@@ -164,13 +160,12 @@ async function handleFeed(feed) {
         JSON.stringify({ timestamp: Date.now(), xml: freshXml })
       );
       const freshData = await parseXml(freshXml);
+      section.querySelectorAll('.status, article').forEach(n => n.remove());
       renderItems(section, feed.name, freshData.items);
-      hideFeedLoading(sectionId); // Hide loading after fresh fetch and render
     }
   } catch (err) {
     console.error(`Failed to update ${feed.name}`, err);
     if (section.querySelector('.status')) {
-      // More specific error messages
       if (err.isProxyError) {
         status.textContent = `Couldn’t load ${feed.name}: News CORS proxy unavailable.`;
       } else if (err.isParserError) {
@@ -179,54 +174,16 @@ async function handleFeed(feed) {
         status.textContent = `Couldn’t load ${feed.name}.`;
       }
       status.classList.add('error');
-      // Add visual indicator for failed feed
-      section.classList.add('feed-error');
     }
-    hideFeedLoading(sectionId); // Hide loading even on error
   }
 }
 
-function displayFeedLoading(feedName, sectionId, container) {
-  let section = document.getElementById(sectionId);
-  if (!section) {
-    section = document.createElement('section');
-    section.id = sectionId;
-    section.classList.add('feed-section');
-    const idx = feeds.findIndex(f => f.name === feedName);
-    const color = ACCENT_COLORS[idx % ACCENT_COLORS.length];
-    section.style.borderLeftColor = color;
-    section.innerHTML = `<h2>${feedName}</h2>`;
-    container.appendChild(section);
-  }
-  // Remove existing articles and status messages before showing loading
-  section.querySelectorAll('article, .status').forEach(n => n.remove());
-  const loadingStatus = document.createElement('p');
-  loadingStatus.className = 'status loading';
-  loadingStatus.textContent = 'Loading…';
-  section.appendChild(loadingStatus);
-}
-
-function hideFeedLoading(sectionId) {
-  const section = document.getElementById(sectionId);
-  if (section) {
-    const loadingStatus = section.querySelector('.status.loading');
-    if (loadingStatus) loadingStatus.remove();
-  }
-}
 // 11) Load all selected feeds
 function loadNews() {
   const container = document.getElementById('news-feed');
   container.innerHTML = '';
   feeds.filter(f => selectedFeeds.includes(f.url))
     .forEach(f => handleFeed(f));
-}
-
-// Add a general loading indicator while feeds are being processed
-async function loadNewsWithIndicator() {
-  const container = document.getElementById('news-feed');
-  if (container) container.innerHTML = '<article aria-busy="true">Loading cybersecurity news...</article>';
-  await Promise.all(feeds.filter(f => selectedFeeds.includes(f.url)).map(f => handleFeed(f)));
-  if (container) container.querySelector('[aria-busy="true"]').remove(); // Remove general indicator
 }
 
 // 12) Init on page load
