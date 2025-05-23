@@ -117,13 +117,20 @@ function renderItems(section, feedName, items) {
     // Format the date
     const pubDate = new Date(item.pubDate);
     const formattedDate = `${(pubDate.getMonth() + 1).toString().padStart(2, '0')}-${pubDate.getDate().toString().padStart(2, '0')}-${pubDate.getFullYear()}`;
-
+    
+    // Format the time in 12-hour format
+    let hours = pubDate.getHours();
+    const minutes = pubDate.getMinutes().toString().padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
     art.innerHTML = `
       <header><h3><a href="${item.link}" target="_blank">${item.title}</a></h3></header>
       <footer>
         <small>
           ${formattedDate} from ${feedName}
         </small>
+        <small> ${hours}:${minutes} ${ampm}</small>
       </footer>
     `;
     section.appendChild(art);
