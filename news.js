@@ -169,6 +169,8 @@ async function handleFeed(feed) {
     }
   } catch (err) {
     console.error(`Failed to update ${feed.name}`, err);
+    console.log(`Checking for status element for feed: ${feed.name}`);
+    console.log(`Status element found: ${!!section.querySelector('.status')}`);
     if (section.querySelector('.status')) {
       // More specific error messages
       if (err.isProxyError) {
@@ -178,6 +180,7 @@ async function handleFeed(feed) {
       } else {
         status.textContent = `Couldn’t load ${feed.name}.`;
       }
+      console.log(`Setting status text for ${feed.name}: ${status.textContent}`);
       status.classList.add('error');
       // Add visual indicator for failed feed
       section.classList.add('feed-error');
