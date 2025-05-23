@@ -186,6 +186,12 @@ async function handleFeed(feed) {
       status.classList.add('error');
       // Add visual indicator for failed feed
       section.classList.add('feed-error');
+
+      const retryButton = document.createElement('button');
+      retryButton.textContent = 'Retry';
+      retryButton.addEventListener('click', () => handleFeed(feed));
+      section.appendChild(retryButton);
+
     }
   }
 }
