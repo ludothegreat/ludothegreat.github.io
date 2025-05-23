@@ -138,7 +138,7 @@ async function handleFeed(feed) {
   }
 
   // Remove any existing error class before attempting to load
-  // section.classList.remove('feed-error'); // Keep error class until successful retry
+  section.classList.remove('feed-error');
   const status = section.querySelector('.status');
   const cacheKey = 'xmlCache_' + feedKey(feed);
   const raw = localStorage.getItem(cacheKey);
@@ -155,41 +155,34 @@ async function handleFeed(feed) {
     }
   }
 
-  // 10b) fetch fresh in background with retry
-  let retries = 0;
-  const maxRetries = 3;
-  const retryDelay = 5000; // 5 seconds
-
-  while (retries <= maxRetries) {
-    try {
-      const freshXml = await fetchXml(feed);
-      const prevXml = raw ? JSON.parse(raw).xml : null;
-      if (freshXml !== prevXml) {
-        localStorage.setItem(cacheKey,
-          JSON.stringify({ timestamp: Date.now(), xml: freshXml })
-        );
-        const freshData = await parseXml(freshXml);
-        renderItems(section, feed.name, freshData.items);
-      }
-      hideFeedLoading(sectionId);
-      section.classList.remove('feed-error'); // Remove error class on successful fetch
-      break; // Success, exit retry loop
-    } catch (err) {
-      console.error(`Attempt ${retries + 1} failed to update ${feed.name}`, err);
-      if (retries < maxRetries) {
-        await new Promise(resolve => setTimeout(resolve, retryDelay));
-      } else {
-        // All retries failed, display persistent error message
-        const errorStatus = section.querySelector('.status');
-        if (errorStatus) {
-           errorStatus.textContent = `Couldn’t load ${feed.name} after ${maxRetries} retries.`;
-           errorStatus.classList.add('error');
-        }
-        section.classList.add('feed-error'); // Keep error class
-        hideFeedLoading(sectionId);
-      }
-      retries++;
+  // 10b) fetch fresh in background
+  try {
+    const freshXml = await fetchXml(feed);
+    const prevXml = raw ? JSON.parse(raw).xml : null;
+    if (freshXml !== prevXml) {
+      localStorage.setItem(cacheKey,
+        JSON.stringify({ timestamp: Date.now(), xml: freshXml })
+      );
+      const freshData = await parseXml(freshXml);
+      renderItems(section, feed.name, freshData.items);
+      hideFeedLoading(sectionId); // Hide loading after fresh fetch and render
     }
+  } catch (err) {
+    console.error(`Failed to update ${feed.name}`, err);
+    if (section.querySelector('.status')) {
+      // More specific error messages
+      if (err.isProxyError) {
+        status.textContent = `Couldn’t load ${feed.name}: News CORS proxy unavailable.`;
+      } else if (err.isParserError) {
+        status.textContent = `Couldn’t load ${feed.name}: RSS parser failed (possibly CDN down).`;
+      } else {
+        status.textContent = `Couldn’t load ${feed.name}.`;
+      }
+      status.classList.add('error');
+      // Add visual indicator for failed feed
+      section.classList.add('feed-error');
+    }
+    hideFeedLoading(sectionId); // Hide loading even on error
   }
 }
 
@@ -222,20 +215,10 @@ function hideFeedLoading(sectionId) {
 }
 // 11) Load all selected feeds
 function loadNews() {
-    const container = document.getElementById('news-feed');
-    if (!container) return;
-
-    // Get current sections
-    const existingSectionIds = new Set(Array.from(container.children).map(child => child.id));
-
-    feeds.filter(f => selectedFeeds.includes(f.url))
-        .forEach(f => handleFeed(f)); // handleFeed will create or update sections
-
-    // Remove sections for feeds that are no longer selected
-    feeds.filter(f => !selectedFeeds.includes(f.url)).forEach(f => {
-        const sectionId = 'sec-' + feedKey(f);
-        document.getElementById(sectionId)?.remove();
-    });
+  const container = document.getElementById('news-feed');
+  container.innerHTML = '';
+  feeds.filter(f => selectedFeeds.includes(f.url))
+    .forEach(f => handleFeed(f));
 }
 
 // Add a general loading indicator while feeds are being processed
