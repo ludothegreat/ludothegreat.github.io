@@ -291,7 +291,7 @@ main.container {
 
 .creds-history {
   position: absolute;
-  top: 100%;
+  bottom: 0;
   left: 0;
   background: #fff;
   color: #222;
@@ -314,7 +314,7 @@ main.container {
 }
 
 @media (min-width: 601px) {
-  .creds-history { left: 50%; }
+  .creds-history { left: 50%; transform: translateX(-50%); }
 }
 @media (max-width: 600.99px) {
   .creds-history { left: 0;
