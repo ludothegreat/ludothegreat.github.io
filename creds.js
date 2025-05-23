@@ -74,14 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function openDropdown() {
       credsHistory.hidden = false;
       renderCredsHistory();
-      // Sync dropdown width and position with faux-url
-      const fauxUrl = document.getElementById('faux-url');
-      if (fauxUrl && credsHistory) {
-        const rect = fauxUrl.getBoundingClientRect();
-        const scrollLeft = window.scrollX || window.pageXOffset;
-        credsHistory.style.width = rect.width + 'px';
-        credsHistory.style.left = (fauxUrl.offsetLeft) + 'px';
-      }
       open = true;
     }
 
