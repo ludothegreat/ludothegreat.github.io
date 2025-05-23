@@ -1,15 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Key Counts Summary</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>defaultcreds.lol | Cybersecurity News</title>
+
+  <!-- Emoji‑favicon (LOL face) -->
+  <link rel="icon"
+    href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Ctext%20y='50%25'%20x='50%25'%20dominant-baseline='middle'%20text-anchor='middle'%20font-size='50'%3E😆%3C/text%3E%3C/svg%3E">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/picocss@2/css/pico.min.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
-    <h1>Key Counts Summary</h1>
-    <div id="summary-container">
-        <!-- Summary data will be populated here -->
+
+  <nav class="container-fluid">
+    <div class="address-bar-container">
+      <div class="address-bar-left">
+        <a href="/" class="home-button" aria-label="Home" data-spa-link>⌂</a>
+      </div>
+      <div class="address-bar-center">
+        <div class="faux-url" id="faux-url" role="img"
+        aria-label="Site logo: example of default credentials in a URL bar, admin:password123@defaultcreds.lol"
+        title="Site logo: example of default credentials in a URL bar, admin:password123@defaultcreds.lol">
+        <span class="addressbar-icon left" title="Site Identity">
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="vertical-align:middle">
+    <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/>
+    <ellipse cx="10" cy="10" rx="5" ry="9" stroke="currentColor" stroke-width="1.5"/>
+    <ellipse cx="10" cy="10" rx="9" ry="5" stroke="currentColor" stroke-width="1.5"/>
+  </svg>
+</span>
+        <span class="faux-url-text"><span class="protocol">https://</span><span class="creds">admin:<span class="password">password123</span>@</span><span class="host">defaultcreds.lol</span></span>
+        <button class="addressbar-icon right star-toggle" id="bookmark-star" title="Bookmark" aria-pressed="false" data-ignore-history style="background:none;border:none;padding:0;cursor:pointer;display:inline-flex;align-items:center;">
+  <svg class="star-outline" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="vertical-align:middle;display:inline;">
+    <polygon points="10,2 12.4,7.5 18,8 13.7,12 15,18 10,15 5,18 6.3,12 2,8 7.6,7.5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
+  </svg>
+  <svg class="star-filled" width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="vertical-align:middle;display:none;color:#FFD600;">
+    <polygon points="10,2 12.4,7.5 18,8 13.7,12 15,18 10,15 5,18 6.3,12 2,8 7.6,7.5" stroke="currentColor" stroke-width="1.5" fill="currentColor" stroke-linejoin="round"/>
+  </svg>
+</button>
+        <span class="addressbar-icon right" title="Go">
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true" style="vertical-align:middle">
+    <polyline points="6,4 14,10 6,16" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</span>
+      </div>
+      </div>
+      <div class="address-bar-right">
+        <!-- Removed theme toggle from here -->
+      </div>
     </div>
-    <script src="script.js"></script>
+    <button id="theme-toggle" aria-label="Toggle theme">🌙</button>
+    <div class="tab-bar">
+      <a href="/" data-spa-link class="tab active">Home</a>
+      <a href="/about" data-spa-link class="tab">About</a>
+    </div>
+    <div id="creds-history" class="creds-history" hidden></div>
+  </nav>
+
+  <main class="container" id="spa-content"></main>
+
+  <footer class="container">
+    <small>© 2025 defaultcreds.lol</small>
+  </footer>
+
+  <script src="theme.js"></script>
+  <script src="creds.js"></script>
+  <script src="https://unpkg.com/rss-parser/dist/rss-parser.min.js"></script>
+  <script src="news.js"></script>
+  <script src="widget.js"></script>
+  <script src="main.js"></script>
+  <script>
+    // Star toggle logic
+    document.addEventListener('DOMContentLoaded', function() {
+      const starBtn = document.getElementById('bookmark-star');
+      if (starBtn) {
+        // Prevent all pointer and focus events from propagating and triggering parent handlers
+        ['mousedown','mouseup','click','focus'].forEach(evt => {
+          starBtn.addEventListener(evt, function(event) {
+            event.stopImmediatePropagation();
+            event.preventDefault();
+            if(evt === 'click') {
+              const isStarred = starBtn.classList.toggle('starred');
+              starBtn.setAttribute('aria-pressed', isStarred);
+              starBtn.querySelector('.star-outline').style.display = isStarred ? 'none' : 'inline';
+              starBtn.querySelector('.star-filled').style.display = isStarred ? 'inline' : 'none';
+            }
+          });
+        });
+      }
+    });
+  </script>
 </body>
+
 </html>
