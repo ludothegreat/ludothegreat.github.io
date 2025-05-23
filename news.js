@@ -100,6 +100,7 @@ async function parseXml(xml) {
 
 // 9) Render items under a section
 function renderItems(section, feedName, items) {
+  section.querySelectorAll('.retry-button').forEach(button => button.remove());
   section.querySelectorAll('article').forEach(a => a.remove());
   if (!items.length) {
     const none = document.createElement('p');
