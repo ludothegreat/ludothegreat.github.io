@@ -1,22 +1,29 @@
-name: defaultcreds.lol
-
-on:
-  push:
-    branches:
-      - main
-
 jobs:
   ftp-deploy:
     runs-on: ubuntu-latest
+    environment: defaultcreds.lol
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # Get enough history to compare
+
+      - name: Check if new commits since last run
+        id: changes
+        run: |
+          if git log -1 --since="1 hour ago" --oneline | grep .; then
+            echo "There are changes."
+          else
+            echo "No changes in the last hour. Skipping deploy."
+            exit 78
+          fi
 
       - name: Deploy to FTP server
+        if: steps.changes.outcome == 'success'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          server-dir: /
+          server-dir: /public_html/
