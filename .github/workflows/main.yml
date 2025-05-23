@@ -1,3 +1,8 @@
+on:
+  schedule:
+    - cron: "0 * * * *"   # every hour at minute 0
+  workflow_dispatch:
+
 jobs:
   ftp-deploy:
     runs-on: ubuntu-latest
@@ -13,14 +18,14 @@ jobs:
         id: changes
         run: |
           if git log -1 --since="1 hour ago" --oneline | grep .; then
-            echo "There are changes."
+            echo "has_changes=true" >> $GITHUB_OUTPUT
           else
             echo "No changes in the last hour. Skipping deploy."
-            exit 78
+            echo "has_changes=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Deploy to FTP server
-        if: steps.changes.outcome == 'success'
+        if: steps.changes.outputs.has_changes == 'true'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
