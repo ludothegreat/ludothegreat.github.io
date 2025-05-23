@@ -331,7 +331,9 @@ nav.container-fluid {
   z-index: 100;
 }
 
-
+@media (min-width: 601px) {
+  .creds-history { left: 50%; transform: translateX(-50%); }
+}
 @media (max-width: 600px) {
   .creds-history {
     min-width: 0;
