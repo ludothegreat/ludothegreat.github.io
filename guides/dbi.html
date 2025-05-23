@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Install Games Using Russian DBI v774</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background-color: #111;
+      color: #eee;
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    h1 {
+      color: #1abc9c;
+    }
+
+    ol {
+      padding-left: 1.2em;
+    }
+
+    code, pre {
+      background: #222;
+      color: #0f0;
+      padding: 0.2em 0.4em;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+
+    .note {
+      margin-top: 1rem;
+      padding: 1rem;
+      background-color: #222;
+      border-left: 4px solid #1abc9c;
+    }
+
+    footer {
+      margin-top: 3rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+
+    footer a {
+      color: #1abc9c;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Method 2: Installing Directly on the Switch Using Russian DBI (v774)</h1>
+  <p>This method lets you download and install games directly on your Switch without needing a PC.</p>
+
+  <h2>Steps:</h2>
+  <ol>
+    <li>Download <a href="https://dbi.ultranx.ru/assets/dbi_ru.zip" target="_blank">dbi_ru.zip</a>.</li>
+    <li>Insert your Switch’s SD card into your PC.</li>
+    <li>Navigate to the <code>/switch/</code> directory on the SD card and create a new folder named <code>DBI_RU</code>.</li>
+    <li>To display English game names, create a new text file in the <code>/switch/DBI_RU/</code> folder:</li>
+    <li>Right-click, select <strong>New File</strong>, and name it <code>dbi.locations</code>.</li>
+    <li>Open the file and add the following text:</li>
+  </ol>
+
+  <pre><code>[Location_0]
+Name=NotUltraNX
+Type=ApacheHTTP
+URL=https://dbi.ultranx.ru/en/</code></pre>
+
+  <ol start="7">
+    <li>Extract the contents of <code>dbi_ru.zip</code> into the <code>/switch/DBI_RU/</code> folder on your SD card.</li>
+    <li>Insert the SD card back into your Switch.</li>
+    <li>Power on your Switch and access the Homebrew Menu:</li>
+    <li>Enter Tile Mode by holding <strong>R</strong> while launching any game.</li>
+    <li>Open <strong>DBI v774</strong>.</li>
+    <li>In DBI, select <strong>NotUltraNX</strong> and press <strong>A</strong> to access the server.</li>
+  </ol>
+
+  <p>You will see several options:</p>
+  <ul>
+    <li>All Files</li>
+    <li>Latest Releases</li>
+    <li>All Games</li>
+    <li>Mods</li>
+  </ul>
+
+  <ol start="13">
+    <li>Navigate to <strong>All Games</strong>, then press <strong>ZL + ZR</strong> to open the search function.</li>
+    <li>Type the name of the game you’re looking for and press <strong>Enter</strong> on the keyboard.</li>
+    <li>Select your game by pressing <strong>A</strong>. You will see multiple available files:
+      <ul>
+        <li>Base Game</li>
+        <li>Updates</li>
+        <li>DLC</li>
+        <li>Mods</li>
+      </ul>
+    </li>
+    <li>To select files for download:
+      <ul>
+        <li>Press <strong>X</strong> on each file you want to batch select.</li>
+        <li>Or press <strong>Y</strong> to select ALL files.</li>
+      </ul>
+    </li>
+    <li>Press <strong>A</strong> to confirm your selection, then press <strong>A</strong> again on the new screen to begin downloading and installing.</li>
+    <li>Wait for the download and installation to complete. (A 13GB game typically takes around 30 minutes).</li>
+    <li>Once the installation is finished, press <strong>Home</strong> and close the previous application.</li>
+  </ol>
+
+  <div class="note">
+    <strong>You're ready to play your newly installed game! 🎮</strong>
+  </div>
+
+  <footer>
+    <p>Back to <a href="https://defaultcreds.lol">defaultcreds.lol</a></p>
+  </footer>
+
+</body>
+</html>
