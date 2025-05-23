@@ -206,6 +206,10 @@ main.container {
   font-weight: bold;
 }
 
+.address-bar-container {
+  position: relative;
+}
+
 
 
 .faux-url {
@@ -287,7 +291,8 @@ main.container {
 
 .creds-history {
   position: absolute;
-  top: calc(100% - 1px); /* Adjust top to align directly below */
+  top: 100%;
+  left: 0;
   background: #fff;
   color: #222;
   border: 1px solid #bbb;
@@ -309,7 +314,7 @@ main.container {
 }
 
 @media (min-width: 601px) {
-  .creds-history { left: 50%; transform: translateX(-50%); }
+  .creds-history { left: 50%; }
 }
 @media (max-width: 600.99px) {
   .creds-history { left: 0;
