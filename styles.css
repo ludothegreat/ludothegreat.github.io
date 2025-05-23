@@ -206,15 +206,6 @@ main.container {
   font-weight: bold;
 }
 
-.address-bar-container {
-  width: 100%;
-}
-
-.address-bar-container {
-  display: flex;
-  margin: 0 auto;
-  position: relative;
-}
 
 
 .faux-url {
@@ -390,7 +381,7 @@ html.dark .creds-history .history-item:focus {
   gap: 0.25em;
   width: 100%;
   border-bottom: 2.5px solid var(--primary, #00bcd4);
-  margin: 0 0 0.5em 0;
+  margin: 0;
   position: relative;
   z-index: 1;
 }
