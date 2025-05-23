@@ -135,6 +135,8 @@ async function handleFeed(feed) {
     section.appendChild(status);
     container.appendChild(section);
   }
+  // Remove any existing error class before attempting to load
+  section.classList.remove('feed-error');
   const status = section.querySelector('.status');
   const cacheKey = 'xmlCache_' + feedKey(feed);
   const raw = localStorage.getItem(cacheKey);
@@ -166,6 +168,7 @@ async function handleFeed(feed) {
   } catch (err) {
     console.error(`Failed to update ${feed.name}`, err);
     if (section.querySelector('.status')) {
+      // More specific error messages
       if (err.isProxyError) {
         status.textContent = `Couldn’t load ${feed.name}: News CORS proxy unavailable.`;
       } else if (err.isParserError) {
@@ -174,6 +177,8 @@ async function handleFeed(feed) {
         status.textContent = `Couldn’t load ${feed.name}.`;
       }
       status.classList.add('error');
+      // Add visual indicator for failed feed
+      section.classList.add('feed-error');
     }
   }
 }
