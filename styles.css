@@ -207,20 +207,6 @@ main.container {
 }
 
 .address-bar-container {
-  display: flex;
-  margin: 0 auto;
-  position: relative;
-  position: relative;
-}
-
-
-nav.container-fluid {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.5rem 1rem;
-  background: var(--bg-color);
-  position: relative;
   width: 100%;
 }
 
