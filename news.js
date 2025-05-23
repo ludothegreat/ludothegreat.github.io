@@ -71,13 +71,20 @@ function feedKey(feed) {
 
 // 7) Fetch raw XML
 async function fetchXml(feed) {
-  try {
-    const res = await fetch(CORS_PROXY + encodeURIComponent(feed.url));
-    if (!res.ok) throw new Error(`Proxy ${res.status}`);
-    return await res.text();
-  } catch (err) {
-    err.isProxyError = true;
-    throw err;
+  const maxRetries = 3;
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      const res = await fetch(CORS_PROXY + encodeURIComponent(feed.url));
+      if (!res.ok) throw new Error(`Proxy ${res.status}`);
+      return await res.text();
+    } catch (err) {
+      console.warn(`Fetch attempt ${i + 1} failed for ${feed.name}:`, err);
+      if (i === maxRetries - 1) {
+        err.isProxyError = true;
+        throw err; // Re-throw the error after the last attempt
+      }
+      await new Promise(resolve => setTimeout(resolve, 500)); // Wait before retrying
+    }
   }
 }
 
