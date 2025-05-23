@@ -122,8 +122,8 @@ function renderItems(section, feedName, items) {
     let hours = pubDate.getHours();
     const minutes = pubDate.getMinutes().toString().padStart(2, '0');
     const ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
+ hours = hours % 12;
+ hours = hours ? hours : 12; // the hour '0' should be '12'
     art.innerHTML = `
       <header><h3><a href="${item.link}" target="_blank">${item.title}</a></h3></header>
       <footer>
@@ -131,7 +131,7 @@ function renderItems(section, feedName, items) {
           ${formattedDate} from ${feedName}
         </small>
         <small> ${hours}:${minutes} ${ampm}</small>
-      </footer>
+ </footer>
     `;
     section.appendChild(art);
   });
