@@ -173,6 +173,9 @@ async function handleFeed(feed) {
       renderItems(section, feed.name, freshData.items);
     }
   } catch (err) {
+    // Remove any existing retry button before showing the error
+    section.querySelectorAll('.retry-button').forEach(button => button.remove());
+
     console.error(`Failed to update ${feed.name}`, err);
     if (section.querySelector('.status')) {
       // More specific error messages
@@ -187,10 +190,14 @@ async function handleFeed(feed) {
       // Add visual indicator for failed feed
       section.classList.add('feed-error');
 
-      const retryButton = document.createElement('button');
-      retryButton.textContent = 'Retry';
-      retryButton.addEventListener('click', () => handleFeed(feed));
-      section.appendChild(retryButton);
+      // Only add the retry button if one doesn't already exist
+      if (!section.querySelector('.retry-button')) {
+        const retryButton = document.createElement('button');
+        retryButton.textContent = 'Retry';
+        retryButton.classList.add('retry-button'); // Add a class for easy selection
+        retryButton.addEventListener('click', () => handleFeed(feed));
+        section.appendChild(retryButton);
+      }
 
     }
   }
