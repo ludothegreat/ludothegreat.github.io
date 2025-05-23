@@ -103,6 +103,8 @@ function renderItems(section, feedName, items) {
   section.querySelectorAll('.retry-button').forEach(button => button.remove());
   section.querySelectorAll('article').forEach(a => a.remove());
   if (!items.length) {
+    // Ensure retry button is removed even if no items are found
+    section.querySelectorAll('.retry-button').forEach(button => button.remove());
     const none = document.createElement('p');
     none.className = 'status';
     none.textContent = 'No items found.';
@@ -111,9 +113,18 @@ function renderItems(section, feedName, items) {
   }
   items.slice(0, 5).forEach(item => {
     const art = document.createElement('article');
+
+    // Format the date
+    const pubDate = new Date(item.pubDate);
+    const formattedDate = `${(pubDate.getMonth() + 1).toString().padStart(2, '0')}-${pubDate.getDate().toString().padStart(2, '0')}-${pubDate.getFullYear()}`;
+
     art.innerHTML = `
       <header><h3><a href="${item.link}" target="_blank">${item.title}</a></h3></header>
-      <footer><small>from ${feedName}</small></footer>
+      <footer>
+        <small>
+          ${formattedDate} from ${feedName}
+        </small>
+      </footer>
     `;
     section.appendChild(art);
   });
