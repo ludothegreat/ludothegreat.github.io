@@ -310,10 +310,10 @@ nav.container-fluid {
 .creds-history {
   position: absolute;
   top: 100%;
-  left: 0;
   background: #fff;
   color: #222;
   border: 1px solid #bbb;
+  left: 50%;
   border-radius: 0 0 8px 8px;
   box-shadow: 0 4px 24px #0002;
   font-family: monospace;
@@ -328,13 +328,14 @@ nav.container-fluid {
   min-width: unset;
   max-width: unset;
 
+  transform: translateX(-50%);
   z-index: 100;
 }
 
 @media (min-width: 601px) {
   .creds-history { left: 50%; transform: translateX(-50%); }
 }
-@media (max-width: 600px) {
+@media (max-width: 600.99px) {
   .creds-history {
     min-width: 0;
     width: 100vw;
