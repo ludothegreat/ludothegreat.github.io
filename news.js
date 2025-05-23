@@ -128,9 +128,8 @@ function renderItems(section, feedName, items) {
       <header><h3><a href="${item.link}" target="_blank">${item.title}</a></h3></header>
       <footer>
         <small>
-          ${formattedDate} from ${feedName}
+          ${formattedDate} - ${hours}:${minutes} ${ampm} | ${feedName}
         </small>
-        <small> ${hours}:${minutes} ${ampm}</small>
  </footer>
     `;
     section.appendChild(art);
