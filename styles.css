@@ -309,7 +309,7 @@ nav.container-fluid {
 
 .creds-history {
   position: absolute;
-  top: calc(100% + 5px); /* Adjust top to align directly below */
+  top: calc(100% - 1px); /* Adjust top to align directly below */
   background: #fff;
   color: #222;
   border: 1px solid #bbb;
