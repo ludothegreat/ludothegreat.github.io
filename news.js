@@ -127,8 +127,8 @@ function renderItems(section, feedName, items) {
     art.innerHTML = `
       <header><h3><a href="${item.link}" target="_blank">${item.title}</a></h3></header>
       <footer>
-        <small>
-          ${formattedDate} - ${hours}:${minutes} ${ampm} | ${feedName}
+ <small>
+ ${formattedDate} - ${hours}:${minutes} ${ampm} | ${feedName}${item.author ? ` - ${item.author}` : ''}
         </small>
  </footer>
     `;
