@@ -114,6 +114,8 @@ function renderItems(section, feedName, items) {
   items.slice(0, 5).forEach(item => {
     const art = document.createElement('article');
 
+    const details = document.createElement('details');
+
     // Format the date
     const pubDate = new Date(item.pubDate);
     const formattedDate = `${(pubDate.getMonth() + 1).toString().padStart(2, '0')}-${pubDate.getDate().toString().padStart(2, '0')}-${pubDate.getFullYear()}`;
