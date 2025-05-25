@@ -175,7 +175,9 @@ async function handleFeed(feed) {
   // Remove any existing error class before attempting to load
   section.classList.remove('feed-error');
   const status = section.querySelector('.status');
+
   const cacheKey = 'xmlCache_' + feedKey(feed);
+
   const raw = localStorage.getItem(cacheKey);
 
   // 10a) render from cache immediately
@@ -183,7 +185,9 @@ async function handleFeed(feed) {
     try {
       const { xml } = JSON.parse(raw);
       const data = await parseXml(xml);
-      status.remove();
+      if (status) {
+        status.remove();
+      }
       renderItems(section, feed.name, data.items);
     } catch (e) {
       console.warn('Cache parse error', e);
@@ -207,19 +211,25 @@ async function handleFeed(feed) {
     section.querySelectorAll('.retry-button').forEach(button => button.remove());
 
     console.error(`Failed to update ${feed.name}`, err);
-    if (section.querySelector('.status')) {
+    // Check if the status element exists before trying to update it
+    const currentStatus = section.querySelector('.status');
+    if (currentStatus) {
       // More specific error messages
       if (err.isProxyError) {
-        status.textContent = `Couldn’t load ${feed.name}: News CORS proxy unavailable.`;
+        currentStatus.textContent = `Couldn’t load ${feed.name}: News CORS proxy unavailable.`;
       } else if (err.isParserError) {
-        status.textContent = `Couldn’t load ${feed.name}: RSS parser failed (possibly CDN down).`;
+        currentStatus.textContent = `Couldn’t load ${feed.name}: RSS parser failed (possibly CDN down).`;
       } else {
-        status.textContent = `Couldn’t load ${feed.name}.`;
+        currentStatus.textContent = `Couldn’t load ${feed.name}.`;
       }
-      status.classList.add('error');
+      currentStatus.classList.add('error');
       // Add visual indicator for failed feed
       section.classList.add('feed-error');
-
+    } else {
+        // If status element doesn't exist, log a warning or create one
+        console.warn('Status element not found for feed section:', feed.name);
+        // Optionally, create a status element here if needed
+    }
       // Only add the retry button if one doesn't already exist
       if (!section.querySelector('.retry-button')) {
         const retryButton = document.createElement('button');
@@ -229,7 +239,6 @@ async function handleFeed(feed) {
         section.appendChild(retryButton);
       }
 
-    }
   }
 }
 
