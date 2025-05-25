@@ -48,9 +48,9 @@ function renderFeedForm() {
     const div = document.createElement('div');
     div.classList.add('feed-option'); // Add the class 'feed-option' to the div
     const id = 'chk-' + btoa(f.url).slice(0, 6);
-    // Create the checkbox input
+    // Create the checkbox input and label
     div.innerHTML = `
-      <input type="checkbox" id="${id}" value="${f.url}" ${selectedFeeds.includes(f.url) ? 'checked' : ''}>
+      <input type="checkbox" id="${id}" value="${f.url}" ${selectedFeeds.includes(f.url) ? 'checked' : ''} data-feed-url="${f.url}">
       <label for="${id}">${f.name}</label>
  `;
     form.appendChild(div); // Append the div to the form
@@ -204,7 +204,9 @@ async function handleFeed(feed) {
     section.querySelectorAll('.retry-button').forEach(button => button.remove());
 
     console.error(`Failed to update ${feed.name}`, err);
-    if (section.querySelector('.status')) {
+    // Ensure the status element exists before attempting to modify it
+    const statusElement = section.querySelector('.status');
+    if (statusElement) {
       // More specific error messages
       if (err.isProxyError) {
         status.textContent = `Couldn’t load ${feed.name}: News CORS proxy unavailable.`;
