@@ -65,11 +65,6 @@ function renderFeedForm() {
   };
 }
 
-// Run renderFeedForm after the DOM is fully loaded
-document.addEventListener('DOMContentLoaded', () => {
-  renderFeedForm();
-});
-
 
 // 6) Helpers for cache keys
 function feedKey(feed) {
