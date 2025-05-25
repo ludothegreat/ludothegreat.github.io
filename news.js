@@ -169,12 +169,11 @@ async function handleFeed(feed) {
   // Remove any existing error class before attempting to load
   section.classList.remove('feed-error');
   const status = section.querySelector('.status');
- if (!status && section) { // Ensure status element exists or create it if section does
+ if (!status) { // Ensure status element exists or create it if section does
     const newStatus = document.createElement('p');
     newStatus.className = 'status';
     newStatus.textContent = 'Loading…';
     section.appendChild(newStatus);
-    status = newStatus; // Update status variable to the newly created element
   }
   const cacheKey = 'xmlCache_' + feedKey(feed);
 
