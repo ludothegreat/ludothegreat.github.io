@@ -228,9 +228,3 @@ function loadNews() {
   feeds.filter(f => selectedFeeds.includes(f.url))
     .forEach(f => handleFeed(f));
 }
-
-// 12) Init on page load
-document.addEventListener('DOMContentLoaded', () => {
-  renderFeedForm();
-  loadNews();
-});
