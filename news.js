@@ -42,21 +42,20 @@ function renderFeedForm() {
  container.appendChild(details);
  form = details.querySelector('form');
   } // This closing brace is for the if (!form) block
-  form.innerHTML = '';
+  form.innerHTML = ''; // Clear the form before rendering
   // Completely replace the feeds.forEach loop content
   feeds.forEach(f => {
     const div = document.createElement('div');
     div.classList.add('feed-option'); // Add the class 'feed-option' to the div
     const id = 'chk-' + btoa(f.url).slice(0, 6);
-    const chk = document.createElement('input');
-    chk.type = 'checkbox';
-    chk.id = id;
-    chk.value = f.url;
-    chk.checked = selectedFeeds.includes(f.url);
- div.appendChild(chk); // Append the checkbox to the div
-    const label = document.createElement('label');    label.htmlFor = id;    label.textContent = f.name; // Set label text
-    div.appendChild(label); // Append the label to the div
+    // Create the checkbox input
+    div.innerHTML = `
+      <input type="checkbox" id="${id}" value="${f.url}" ${selectedFeeds.includes(f.url) ? 'checked' : ''}>
+      <label for="${id}">${f.name}</label>
+ `;
     form.appendChild(div); // Append the div to the form
+    // No need to explicitly append checkbox and label to div anymore
+    // as they are created within the div's innerHTML
   });
   form.onchange = () => {
     selectedFeeds = Array.from(form.querySelectorAll('input:checked'))
