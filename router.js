@@ -21,7 +21,7 @@ const routes = {
 
 const contentArea = document.getElementById('content-area');
 
-async function loadContent(filePath) {
+async function loadContent(filePath, route) {
   try {
     const response = await fetch(filePath);
     if (!response.ok) {
@@ -29,8 +29,8 @@ async function loadContent(filePath) {
     }
     const html = await response.text();
     contentArea.innerHTML = html;
-    if (currentRoute && typeof currentRoute.init === 'function') {
-      currentRoute.init();
+    if (route && typeof route.init === 'function') {
+      route.init();
     }
   } catch (error) {
     console.error('Failed to load content:', error);
@@ -49,14 +49,14 @@ function router() {
   if (route && route.filePath) {
     console.log('Route found:', route);
     console.log('Calling loadContent with:', route.filePath);
-    loadContent(route.filePath)
+    loadContent(route.filePath, route)
       .then(() => { // After content is loaded and inserted
         if (route.init && typeof route.init === 'function') {
           route.init(); // Call the init function if it exists
         }
       });
   } else {
-    console.warn('Route not found:', hash);
+ console.warn('Route not found:', hash);
  console.log('Route not found, loading default:', routes['#/'].filePath);
     loadContent(routes['#/'].filePath); // Load default home route
   }
