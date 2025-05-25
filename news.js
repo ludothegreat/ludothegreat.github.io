@@ -61,7 +61,8 @@ function renderFeedForm() {
     selectedFeeds = Array.from(form.querySelectorAll('input:checked'))
       .map(i => i.value);
     localStorage.setItem('selectedFeeds', JSON.stringify(selectedFeeds));
-    loadNews();
+    const container = document.getElementById('news-feed');
+    if (container) loadNews(); // Only reload news if on the news page
   };
 }
 
