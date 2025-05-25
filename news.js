@@ -39,9 +39,9 @@ function renderFeedForm() {
   if (!form) {
     const details = document.createElement('details');
     details.innerHTML = `<summary>Select Feeds</summary><form id="feed-form"></form>`;
-    container.appendChild(details);
-    form = details.querySelector('form');
-  }
+ container.appendChild(details);
+ form = details.querySelector('form');
+  } // This closing brace is for the if (!form) block
   form.innerHTML = '';
   feeds.forEach(f => {
     const id = 'chk-' + btoa(f.url).slice(0, 6);
@@ -54,7 +54,9 @@ function renderFeedForm() {
     label.htmlFor = id;
     label.textContent = ' ' + f.name;
     label.prepend(chk);
-    form.appendChild(label);
+    const div = document.createElement('div'); // Create a div for each feed option
+    div.appendChild(label); // Append the label (containing checkbox and text) to the div
+    form.appendChild(div); // Append the div to the form
   });
   form.onchange = () => {
     selectedFeeds = Array.from(form.querySelectorAll('input:checked'))
