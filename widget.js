@@ -72,12 +72,13 @@ document.addEventListener('DOMContentLoaded', () => {
   renderCredOfWeek();
 
   // Hamburger menu toggle
-  const hamburgerBtn = document.getElementById('hamburger-btn');
+  const hamburgerToggle = document.getElementById('hamburger-menu-toggle');
   const hamburgerMenu = document.getElementById('hamburger-menu');
 
-  if (hamburgerBtn && hamburgerMenu) {
-    hamburgerBtn.addEventListener('click', () => {
-      hamburgerMenu.classList.toggle('open');
+  if (hamburgerToggle && hamburgerMenu) {
+    hamburgerToggle.addEventListener('click', () => {
+      const isHidden = hamburgerMenu.hasAttribute('hidden');
+      if (isHidden) { hamburgerMenu.removeAttribute('hidden'); } else { hamburgerMenu.setAttribute('hidden', ''); }
     });
   }
 

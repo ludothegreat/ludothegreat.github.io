@@ -11,28 +11,47 @@
 }
 
 .hamburger-menu {
-  position: relative;
+  position: absolute;
+  top: 40px; /* Position below the address bar. Adjust this value if needed. */
+  right: 10px; /* Align to the right. Adjust this value if needed. */
+  background-color: var(--theme-background);
+  border: 1px solid var(--theme-color);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+  padding: 10px;
+  z-index: 1000; /* Ensure it's on top of other content */
+  min-width: 150px; /* Set a minimum width for the dropdown */
 }
 
-.hamburger-button {
+.address-bar-container {
+  display: flex;
+  align-items: center; /* Vertically align items */
+  justify-content: space-between;
+}
+
+#hamburger-menu-toggle {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  margin-right: 10px; /* Add some space between the button and the address bar */
+  color: var(--theme-color); /* Set the color of the icon */
 }
 
-.menu-content {
+.hamburger-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.hamburger-menu li {
+  margin-bottom: 8px; /* Adjust spacing between menu items */
+}
+
+.hamburger-menu a,
+.hamburger-menu button {
+  text-decoration: none;
+  color: var(--theme-color);
   display: none;
-  position: absolute;
-  top: 100%; /* Position below the hamburger button */
-  right: 0;
-  background-color: var(--background-color); /* Use your theme's background */
-  border: 1px solid var(--border-color); /* Add a border */
-  z-index: 1; /* Ensure it's above other content */
-  flex-direction: column; /* Stack menu items vertically */
-  padding: 0.5rem;
-}
-
-.feed-option input[type="checkbox"] {
-  margin-right: 0.5rem; /* Space between checkbox and label */
+  padding: 5px 0; /* Add some padding for better click area */
 }
