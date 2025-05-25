@@ -204,20 +204,22 @@ async function handleFeed(feed) {
     section.querySelectorAll('.retry-button').forEach(button => button.remove());
 
     console.error(`Failed to update ${feed.name}`, err);
-    // Ensure the status element exists before attempting to modify it
-    const statusElement = section.querySelector('.status');
-    if (statusElement) {
+    
+    let status = section.querySelector('.status');
+    if (!status) {
+      status = document.createElement('p');
+      status.className = 'status';
+      section.appendChild(status);
+    }
+
       // More specific error messages
       if (err.isProxyError) {
         status.textContent = `Couldn’t load ${feed.name}: News CORS proxy unavailable.`;
       } else if (err.isParserError) {
         status.textContent = `Couldn’t load ${feed.name}: RSS parser failed (possibly CDN down).`;
       } else {
-        status.textContent = `Couldn’t load ${feed.name}.`;
+ status.textContent = `Couldn’t load ${feed.name}.`;
       }
-      status.classList.add('error');
-      // Add visual indicator for failed feed
-      section.classList.add('feed-error');
 
       // Only add the retry button if one doesn't already exist
       if (!section.querySelector('.retry-button')) {
@@ -228,7 +230,9 @@ async function handleFeed(feed) {
         section.appendChild(retryButton);
       }
 
-    }
+    status.classList.add('error');
+    // Add visual indicator for failed feed
+    section.classList.add('feed-error');
   }
 }
 
