@@ -51,7 +51,7 @@ function renderFeedForm() {
     // Create the checkbox input and label
     div.innerHTML = `
       <input type="checkbox" id="${id}" value="${f.url}" ${selectedFeeds.includes(f.url) ? 'checked' : ''} data-feed-url="${f.url}">
-      <label for="${id}">${f.name}</label>
+      <span class="feed-name">${f.name}</span>
  `;
     form.appendChild(div); // Append the div to the form
     // No need to explicitly append checkbox and label to div anymore
