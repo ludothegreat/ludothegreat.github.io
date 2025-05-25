@@ -4,11 +4,17 @@
 const routes = {
   '#': {
     filePath: 'news.html',
-    init: loadNews // Assuming loadNews is globally available from news.js
+    init: () => { // Initialize news view
+      renderFeedForm();
+      loadNews();
+    }
   },
   '#/': {
     filePath: 'news.html',
-    init: loadNews
+ init: () => { // Initialize news view
+ renderFeedForm();
+ loadNews();
+    }
   },
   '#/settings': { filePath: 'settings.html' }
 };
