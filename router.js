@@ -41,7 +41,7 @@ async function loadContent(filePath) {
 function router() {
  let hash = window.location.hash;
  if (hash === '') {
-    hash = '#';
+    hash = '#/';
   }
   const route = routes[hash];
 
