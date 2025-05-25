@@ -43,19 +43,18 @@ function renderFeedForm() {
  form = details.querySelector('form');
   } // This closing brace is for the if (!form) block
   form.innerHTML = '';
+  // Completely replace the feeds.forEach loop content
   feeds.forEach(f => {
+    const div = document.createElement('div');
     const id = 'chk-' + btoa(f.url).slice(0, 6);
     const chk = document.createElement('input');
     chk.type = 'checkbox';
     chk.id = id;
     chk.value = f.url;
     chk.checked = selectedFeeds.includes(f.url);
-    const label = document.createElement('label');
-    label.htmlFor = id;
- label.textContent = ' ' + f.name; // Add a space before the text
- const div = document.createElement('div'); // Create a div for each feed option
  div.appendChild(chk); // Append the checkbox to the div
- div.appendChild(label); // Append the label to the div
+    const label = document.createElement('label');    label.htmlFor = id;    label.textContent = f.name; // Set label text
+    div.appendChild(label); // Append the label to the div
     form.appendChild(div); // Append the div to the form
   });
   form.onchange = () => {
