@@ -175,7 +175,20 @@ main.container {
   /* Optional underline */
   padding-bottom: 0.2em;
 }
+.feed-section h2:hover { cursor: pointer; }
+.feed-section h2::after {
+ content: ' \25BC'; /* Down arrow */
+ display: inline-block;
+ transition: transform 0.2s ease-in-out;
+ margin-left: 0.5em;
+}
 
+.feed-section.collapsed h2::after {
+ transform: rotate(-90deg); /* Rotate arrow up */
+}
+
+
+/* feed-picker adjustments */
 /* cred-of-week tweaks */
 #cred-of-week h3 {
   margin-top: 0;
