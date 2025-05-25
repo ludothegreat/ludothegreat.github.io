@@ -98,6 +98,14 @@
       }
     });
   </script>
+ <script>
+    // Add event listeners to h2 elements in feed sections to toggle collapse
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('section.feed-section h2').forEach(header => {
+        header.addEventListener('click', () => header.parentElement.classList.toggle('collapsed'));
+      });
+    });
+ </script>
 </body>
 
 </html>
