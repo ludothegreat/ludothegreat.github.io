@@ -29,6 +29,9 @@ async function loadContent(filePath, route) {
     }
     const html = await response.text();
     contentArea.innerHTML = html;
+    // Force DOM reflow to potentially re-apply CSS/framework styling
+    contentArea.classList.add('temp-reflow');
+    contentArea.classList.remove('temp-reflow');
     if (route && typeof route.init === 'function') {
       route.init();
     }
