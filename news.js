@@ -133,13 +133,8 @@ function renderItems(section, feedName, items) {
  </footer>
     `;
 
-    // Create article for the rest of the content (footer)
-    const articleContent = document.createElement('article');
-    articleContent.innerHTML = footerHTML;
-    details.appendChild(articleContent);
-
-    section.appendChild(details);
     section.appendChild(art);
+  });
 }
 
 // 10) For each feed: placeholder + cache + background fetch
