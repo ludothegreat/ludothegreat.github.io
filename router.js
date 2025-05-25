@@ -16,7 +16,12 @@ const routes = {
  loadNews();
     }
   },
-  '#/settings': { filePath: 'settings.html' }
+  '#/settings': {
+    filePath: 'settings.html',
+    init: () => { // Initialize settings view
+      renderFeedForm(); // Call renderFeedForm for the settings page
+    }
+  }
 };
 
 const contentArea = document.getElementById('content-area');
@@ -31,10 +36,6 @@ async function loadContent(filePath, route) {
     contentArea.innerHTML = html;
     // Force DOM reflow to potentially re-apply CSS/framework styling
     contentArea.classList.add('temp-reflow');
-    contentArea.classList.remove('temp-reflow');
-    if (route && typeof route.init === 'function') {
-      route.init();
-    }
   } catch (error) {
     console.error('Failed to load content:', error);
     contentArea.innerHTML = '<p>Error loading page.</p>'; // Optional: Display an error message to the user
