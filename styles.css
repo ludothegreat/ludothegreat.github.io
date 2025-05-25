@@ -132,7 +132,7 @@ main.container {
   display: none;
 }
 
-.feed-item-collapsible.collapsed > *:not(summary) {
+#news-feed .feed-item-collapsible.collapsed > *:not(summary) {
   display: none;
 }
 
