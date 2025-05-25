@@ -44,6 +44,7 @@ function renderFeedForm() {
   // Completely replace the feeds.forEach loop content
   feeds.forEach(f => {
     const div = document.createElement('div');
+    div.classList.add('feed-option'); // Add the class 'feed-option' to the div
     const id = 'chk-' + btoa(f.url).slice(0, 6);
     const chk = document.createElement('input');
     chk.type = 'checkbox';
