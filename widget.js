@@ -68,4 +68,20 @@ async function renderCredOfWeek() {
   }
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+  renderCredOfWeek();
+
+  // Hamburger menu toggle
+  const hamburgerBtn = document.getElementById('hamburger-btn');
+  const hamburgerMenu = document.getElementById('hamburger-menu');
+
+  if (hamburgerBtn && hamburgerMenu) {
+    hamburgerBtn.addEventListener('click', () => {
+      hamburgerMenu.classList.toggle('open');
+    });
+  }
+
+  // Theme toggle button functionality (assuming it's now inside the hamburger menu)
+  // This part should ideally be handled in a separate theme.js file for better organization.
+});
 document.addEventListener('DOMContentLoaded', renderCredOfWeek);

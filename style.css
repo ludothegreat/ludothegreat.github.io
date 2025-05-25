@@ -9,3 +9,30 @@
 .feed-option input[type="checkbox"] {
   margin-right: 0.5rem; /* Space between checkbox and label */
 }
+
+.hamburger-menu {
+  position: relative;
+}
+
+.hamburger-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.menu-content {
+  display: none;
+  position: absolute;
+  top: 100%; /* Position below the hamburger button */
+  right: 0;
+  background-color: var(--background-color); /* Use your theme's background */
+  border: 1px solid var(--border-color); /* Add a border */
+  z-index: 1; /* Ensure it's above other content */
+  flex-direction: column; /* Stack menu items vertically */
+  padding: 0.5rem;
+}
+
+.feed-option input[type="checkbox"] {
+  margin-right: 0.5rem; /* Space between checkbox and label */
+}
