@@ -128,6 +128,10 @@ main.container {
   }
 }
 
+.feed-option .feed-name {
+  margin-left: 0.5rem;
+}
+
 .feed-section.collapsed > *:not(h2) {
   display: none;
 }
