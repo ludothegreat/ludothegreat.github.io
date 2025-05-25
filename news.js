@@ -56,6 +56,10 @@ function renderFeedForm() {
     const label = document.createElement('label');    label.htmlFor = id;    label.textContent = f.name; // Set label text
     div.appendChild(label); // Append the label to the div
     form.appendChild(div); // Append the div to the form
+
+    label.addEventListener('click', () => {
+      console.log('Label clicked. htmlFor:', label.htmlFor, 'textContent:', label.textContent);
+    });
   });
   form.onchange = () => {
     selectedFeeds = Array.from(form.querySelectorAll('input:checked'))
