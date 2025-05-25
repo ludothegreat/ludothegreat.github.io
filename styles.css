@@ -13,403 +13,62 @@ html.dark {
 }
 
 body {
-  margin: 0;
   background: var(--bg-color);
   color: var(--text-color);
 }
 
-a {
-  color: var(--text-color);
-}
-
-/* top nav */
-nav.container-fluid {
-  display: flex;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  background: var(--bg-color);
-  position: relative;
-}
-
-#theme-toggle {
-  margin-left: auto;
-  margin-right: 2rem;
-  background: none;
-  border: none;
-  font-size: 1.25rem;
-  cursor: pointer;
-  color: var(--text-color);
-}
-
-.home-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 3em;
-  margin-right: 0.4em;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  text-decoration: none;
-  color: var(--text-color);
-  transition: color 0.15s, background 0.15s;
-}
-.home-button:hover, .home-button:focus {
-  color: #4a90e2;
-  background: rgba(74,144,226,0.07);
-  border-radius: 50%;
-}
-
-
-/* page grid */
-main.container {
-  display: grid;
-  grid-template-columns: minmax(220px, 1fr) 2fr;
-  gap: 2rem;
-  padding: 1rem;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-@media (max-width: 900px) {
-  main.container {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    padding: 0.5rem;
-  }
-  nav.container-fluid {
-    flex-direction: column;
-    align-items: stretch;
-    padding: 0.5rem 0.5rem;
-  }
-  .address-bar-container {
-    margin-bottom: 0.5rem;
-  }
-}
-
-@media (max-width: 600px) {
-  main.container {
-    padding: 0.25rem;
-  }
-  aside, section#news-feed, #feed-settings, #cred-of-week {
-    padding: 0.6rem 0.3rem;
-    margin-bottom: 1rem;
-  }
-  #news-feed article {
-    padding: 0.7rem 0.3rem;
-    font-size: 1rem;
-  }
-  .faux-url {
-    font-size: 0.95rem;
-    padding: 0.4rem 0.5rem;
-    min-width: 0;
-    max-width: 100vw;
-    box-sizing: border-box;
-  }
-  .home-button {
-    font-size: 2em;
-    margin-right: 0.2em;
-    padding: 0.2em 0.4em;
-  }
-  #theme-toggle {
-    font-size: 1.1rem;
-    margin: 0.5em 0 0 0;
-    padding: 0.3em 0.7em;
-  }
-  .creds-history {
-    left: 0.2rem;
-    min-width: 180px;
-    font-size: 0.93rem;
-    padding: 0.3rem 0;
-  }
-  .creds-history .history-item {
-    padding-left: 1.7em;
-    padding-right: 0.7em;
-  }
-}
-
-.feed-option .feed-name {
-  margin-left: 0.5rem;
-}
-
-.feed-section.collapsed > *:not(h2) {
-  display: none;
-}
-
-#news-feed .feed-item-collapsible.collapsed > *:not(summary) {
-  display: none !important;
-}
-
-
-@media (max-width: 600px) {
-  .faux-url {
-    font-size: 0.95rem;
-    padding: 0.4rem 0.5rem;
-  }
-}
-
-/* panels */
-#feed-settings,
-#cred-of-week,
-#news-feed {
-  background: var(--bg-color);
-  border: 1px solid var(--muted-color);
-  border-radius: 0.5rem;
-  padding: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-/* dynamic feed cards */
-.feed-section {
-  border-left: 4px solid transparent;
-  transition: background .2s, border-color .2s;
-}
-
-.feed-section:hover {
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.feed-section h2 {
-  font-size: 2rem;
-  /* Larger than headlines */
-  font-weight: 900;
-  /* Extra bold */
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
-  letter-spacing: 0.01em;
-  text-shadow: 0 2px 8px #0007;
-  /* Optional: subtle shadow for pop */
-  border-bottom: 2px solid var(--muted-color);
-  /* Optional underline */
-  padding-bottom: 0.2em;
-}
-.feed-section h2:hover { cursor: pointer; }
-.feed-section h2::after {
- content: ' \25BC'; /* Down arrow */
- display: inline-block;
- transition: transform 0.2s ease-in-out;
- margin-left: 0.5em;
-}
-
-.feed-section.collapsed h2::after {
- transform: rotate(-90deg); /* Rotate arrow up */
-}
-
-
-/* feed-picker adjustments */
-/* cred-of-week tweaks */
-#cred-of-week h3 {
-  margin-top: 0;
-}
-
-#cred-of-week p {
-  margin: 0.5em 0;
-}
-
-/* news feed styling */
-#news-feed article {
-  margin-bottom: 1rem;
-}
-
-#news-feed h2 {
-  margin-top: 0;
-  font-size: 1.25rem;
-}
-
-/* status messages */
-.status {
-  font-style: italic;
-  margin: .5em 0;
-  color: var(--muted-color);
-}
-
-.status.error {
-  color: var(--error-color);
-  font-weight: bold;
-}
-
+/* --- Hamburger Menu Styles --- */
 .address-bar-container {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
-  margin: 0;
-  position: relative;
 }
 
-
-nav.container-fluid {
+#hamburger-menu-toggle {
+  margin-left: 1.2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-color);
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0.5rem 1rem;
+}
+
+.hamburger-menu {
+  position: absolute;
+  right: 1rem;
+  top: 3.2rem;
   background: var(--bg-color);
-  position: relative;
-  width: 100%;
+  color: var(--text-color);
+  border: 1px solid var(--muted-color);
+  box-shadow: 0 2px 12px #0005;
+  border-radius: 0.5rem;
+  min-width: 170px;
+  z-index: 2000;
+  padding: 1rem 0.6rem;
 }
 
-
-.faux-url {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  max-width: 650px;
-  min-width: 0;
-  padding: 0.6em 1.2em;
-  border: 1.5px solid #888;
-  border-radius: 9px;
-  background: #505050;
-  box-shadow: 0 2px 8px #0001;
-  font-family: monospace;
-  font-size: 1.18rem;
-  transition: box-shadow 0.18s, border-color 0.18s;
-  box-sizing: border-box;
-}
-
-.faux-url-text {
-  flex: 1 1 auto;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  min-width: 0;
-}
-
-
-.faux-url:focus-within, .faux-url:hover {
-  border-color: #4a90e2;
-  box-shadow: 0 2px 12px #4a90e233;
-}
-
-.addressbar-icon {
-  font-size: 1.25em;
-  opacity: 0.85;
-  margin: 0 0.5em;
-  user-select: none;
-  pointer-events: none;
-}
-
-.addressbar-icon.left { margin-left: 0; }
-.addressbar-icon.right { margin-right: 0; }
-
-@media (max-width: 600px) {
-  .faux-url {
-    min-width: 0;
-    font-size: 0.98rem;
-    padding: 0.5em 0.5em;
-  }
-}
-
-.faux-url .protocol {
-  color: #0069d3;
-}
-
-.faux-url .creds {
-  color: #d1d1d1;
-}
-
-.faux-url:hover .password {
-  filter: none;
-}
-
-.faux-url .host {
-  color: #2a9d8f;
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-}
-
-.creds-history {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: #fff;
-  color: #222;
-  border: 1px solid #bbb;
-  border-radius: 0 0 8px 8px;
-  box-shadow: 0 4px 24px #0002;
-  font-family: monospace;
-  font-size: 1rem;
-  padding: 0.5rem 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  overflow-y: auto;
-  max-height: 65vh;
-  width: auto;
-  min-width: unset;
-  max-width: unset;
-
-  z-index: 100;
-}
-
-
-@media (max-width: 600px) {
-  .creds-history {
-    min-width: 0;
-    width: 100vw;
-    left: 0;
-    right: 0;
-    border-radius: 0 0 8px 8px;
-  }
-}
-
-.creds-history[hidden] {
+.hamburger-menu[hidden] {
   display: none !important;
 }
-
-html.dark .creds-history {
-  background: #181c22;
-  color: #c9d1d9;
-  border-color: #333;
-  box-shadow: 0 4px 24px #0008;
+.hamburger-menu ul {
+  margin: 0; padding: 0; list-style: none;
 }
-
-.creds-history .history-item {
-  padding: 0.35em 1.2em 0.35em 2.2em;
+.hamburger-menu li { margin-bottom: 0.6rem; }
+.hamburger-menu li:last-child { margin-bottom: 0; }
+.hamburger-menu a, .hamburger-menu button {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  text-align: left;
+  width: 100%;
+  font-size: 1.1rem;
   cursor: pointer;
-  white-space: nowrap;
-  position: relative;
-  transition: background 0.15s;
+  padding: 0.4em 0.6em;
+  border-radius: 0.3em;
 }
-
-.creds-history .history-item:hover,
-.creds-history .history-item:focus {
-  background: #e0f7fa;
-  color: #222;
-}
-
-html.dark .creds-history .history-item:hover,
-html.dark .creds-history .history-item:focus {
-  background: #22313a;
-  color: #fff;
-}
-
-.creds-history .history-item::before {
-  content: '\1F5D3';
-  /* calendar emoji as icon */
-  position: absolute;
-  left: 0.7em;
-  font-size: 1em;
-  opacity: 0.7;
-}
-
-@media (max-width: 600px) {
-  .creds-history {
-    left: 0.2rem;
-    min-width: 180px;
-    font-size: 0.93rem;
-    padding: 0.3rem 0;
-  }
-
-  .creds-history .history-item {
-    padding-left: 1.7em;
-    padding-right: 0.7em;
-  }
+.hamburger-menu a:hover, .hamburger-menu button:hover {
+  background: var(--muted-color);
+  color: var(--bg-color);
 }
