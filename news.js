@@ -41,6 +41,8 @@ function renderFeedForm() {
     details.innerHTML = `<summary>Select Feeds</summary><form id="feed-form"></form>`;
  container.appendChild(details);
  form = details.querySelector('form');
+  } // This closing brace is for the if (!form) block
+  form.innerHTML = '';
   // Completely replace the feeds.forEach loop content
   feeds.forEach(f => {
     const div = document.createElement('div');
@@ -51,16 +53,20 @@ function renderFeedForm() {
     chk.id = id;
     chk.value = f.url;
     chk.checked = selectedFeeds.includes(f.url);
-    const label = document.createElement('label');
-    label.htmlFor = id;
-    label.textContent = f.name; // Set label text
-    label.prepend(chk); // Append the checkbox into the label element
-    div.appendChild(label); // Append the label (containing checkbox and text) to the div
+ div.appendChild(chk); // Append the checkbox to the div
+    const label = document.createElement('label');    label.htmlFor = id;    label.textContent = f.name; // Set label text
+    div.appendChild(label); // Append the label to the div
     form.appendChild(div); // Append the div to the form
 
     label.addEventListener('click', () => {
       console.log('Label clicked. htmlFor:', label.htmlFor, 'textContent:', label.textContent);
     });
+  });
+  form.onchange = () => {
+    selectedFeeds = Array.from(form.querySelectorAll('input:checked'))
+      .map(i => i.value);
+    localStorage.setItem('selectedFeeds', JSON.stringify(selectedFeeds));
+    loadNews();
   };
 }
 
@@ -170,13 +176,7 @@ async function handleFeed(feed) {
   // Remove any existing error class before attempting to load
   section.classList.remove('feed-error');
   const status = section.querySelector('.status');
- if (!status && section) { // Ensure status element exists or create it if section does
-    const newStatus = document.createElement('p');
-    newStatus.className = 'status';
-    newStatus.textContent = 'Loading…';
-    section.appendChild(newStatus);
-    status = newStatus; // Update status variable to the newly created element
-  }
+
   const cacheKey = 'xmlCache_' + feedKey(feed);
 
   const raw = localStorage.getItem(cacheKey);
@@ -212,6 +212,7 @@ async function handleFeed(feed) {
     section.querySelectorAll('.retry-button').forEach(button => button.remove());
 
     console.error(`Failed to update ${feed.name}`, err);
+    // Check if the status element exists before trying to update it
     const currentStatus = section.querySelector('.status');
     if (currentStatus) {
       // More specific error messages
@@ -226,13 +227,15 @@ async function handleFeed(feed) {
       // Add visual indicator for failed feed
       section.classList.add('feed-error');
     } else {
-      console.warn('Status element not found for feed section when trying to report error:', feed.name);
+        // If status element doesn't exist, log a warning or create one
+        console.warn('Status element not found for feed section:', feed.name);
+        // Optionally, create a status element here if needed
     }
       // Only add the retry button if one doesn't already exist
       if (!section.querySelector('.retry-button')) {
         const retryButton = document.createElement('button');
         retryButton.textContent = 'Retry';
-        retryButton.classList.add('retry-button'); // Add a class for easy selection, kept for consistency
+        retryButton.classList.add('retry-button'); // Add a class for easy selection
         retryButton.addEventListener('click', () => handleFeed(feed));
         section.appendChild(retryButton);
       }
