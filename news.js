@@ -102,7 +102,6 @@ async function parseXml(xml) {
 function renderItems(section, feedName, items) {
   section.querySelectorAll('.retry-button').forEach(button => button.remove());
   section.querySelectorAll('article').forEach(a => a.remove());
-  section.querySelectorAll('details.feed-item-collapsible').forEach(d => d.remove()); // Remove existing details
   if (!items.length) {
     // Ensure retry button is removed even if no items are found
     section.querySelectorAll('.retry-button').forEach(button => button.remove());
@@ -113,11 +112,6 @@ function renderItems(section, feedName, items) {
     return;
   }
   items.slice(0, 5).forEach(item => {
-    const details = document.createElement('details');
-    details.classList.add('feed-item-collapsible');
-
-    const summary = document.createElement('summary');
-
     // Format the date
     const pubDate = new Date(item.pubDate);
     const formattedDate = `${(pubDate.getMonth() + 1).toString().padStart(2, '0')}-${pubDate.getDate().toString().padStart(2, '0')}-${pubDate.getFullYear()}`;
@@ -129,31 +123,15 @@ function renderItems(section, feedName, items) {
     hours = hours % 12;
     hours = hours ? hours : 12; // the hour '0' should be '12'
 
-    const headerHTML = `
+    const art = document.createElement('article');
+    art.innerHTML = `
       <header><h3><a href="${item.link}" target="_blank">${item.title}</a></h3></header>
-    `;
-
-    const footerHTML = `
       <footer>
-        <small>
-          ${formattedDate} - ${hours}:${minutes} ${ampm} | ${feedName}${item.author ? ` - ${item.author}` : ''}
+ <small>
+ ${formattedDate} - ${hours}:${minutes} ${ampm} | ${feedName}${item.author ? ` - ${item.author}` : ''}
         </small>
-      </footer>
+ </footer>
     `;
-
-    summary.innerHTML = headerHTML;
-
-    // Add event listener to toggle collapsed class on details
-    summary.addEventListener('click', (event) => {
-      // Prevent the default details toggle behavior if we are using custom
-      // event handling and CSS for collapsing.
-      // event.preventDefault(); // Keep default for now, may need later
-
-      details.classList.toggle('collapsed');
-    });
-
-
-    details.appendChild(summary);
 
     // Create article for the rest of the content (footer)
     const articleContent = document.createElement('article');
@@ -161,7 +139,7 @@ function renderItems(section, feedName, items) {
     details.appendChild(articleContent);
 
     section.appendChild(details);
-  });
+    section.appendChild(art);
 }
 
 // 10) For each feed: placeholder + cache + background fetch
@@ -182,7 +160,13 @@ async function handleFeed(feed) {
     section.style.borderLeftColor = color;
 
     section.innerHTML = `<h2>${feed.name}</h2>`;
+    const h2 = section.querySelector('h2');
+    // Add event listener to toggle collapsed class on the section
+    h2.addEventListener('click', () => {
+      section.classList.toggle('collapsed');
+    });
     const status = document.createElement('p');
+
     status.className = 'status';
     status.textContent = 'Loading…';
     section.appendChild(status);
@@ -216,7 +200,7 @@ async function handleFeed(feed) {
       );
       const freshData = await parseXml(freshXml);
       section.querySelectorAll('.status, article, details.feed-item-collapsible').forEach(n => n.remove()); // Also remove details
-      renderItems(section, feed.name, freshData.items);
+ renderItems(section, feed.name, freshData.items);
     }
   } catch (err) {
     // Remove any existing retry button before showing the error
