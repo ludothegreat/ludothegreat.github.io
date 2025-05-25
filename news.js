@@ -115,6 +115,7 @@ function renderItems(section, feedName, items) {
     const art = document.createElement('article');
 
     const details = document.createElement('details');
+    details.classList.add('accordion');
 
     // Format the date
     const pubDate = new Date(item.pubDate);
